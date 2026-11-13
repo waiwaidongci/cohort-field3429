@@ -4,5 +4,12 @@ export interface Customer {id:number;code:string;recency:number;frequency:number
 export interface Candidate {k:number;silhouette:number;inertia:number}
 export interface Run {id:number;name:string;dataset_id:number;features:string[];k_min:number;k_max:number;status:string;error:string;created_at:string;result:{best_k?:number;silhouette?:number;sample_count?:number;checksum?:string;seed?:number;candidates?:Candidate[];sample?:{code:string;recency:number;spend:number;label:number}[]}}
 export interface Segment {id:number;run_id:number;label:number;name:string;size:number;center:Record<string,number>;recommendation:string}
+export interface ComparedRun {id:number;name:string;dataset_id:number;dataset_name:string;total:number;group_count:number;created_at:string}
+export interface ComparisonSummary {common:number;retained:number;migrated:number;added:number;left:number;migration_share_of_common:number;migration_share_of_a:number;migration_share_of_b:number;reconciled:boolean}
+export interface GroupMatch {a_label:number|null;a_name:string|null;a_size:number|null;b_label:number|null;b_name:string|null;b_size:number|null;overlap:number;share_of_a_group:number;label_changed:boolean;name_changed:boolean}
+export interface MatrixCell {b_label:number;b_name:string;count:number;share_of_common:number;share_of_a_group:number;matched:boolean}
+export interface MatrixRow {a_label:number;a_name:string;a_size:number;cells:MatrixCell[]}
+export interface Migration {a_label:number;a_name:string;b_label:number;b_name:string;count:number;share_of_common:number;share_of_a_group:number}
+export interface Comparison {run_a:ComparedRun;run_b:ComparedRun;comparable:boolean;reason:string;summary:ComparisonSummary;matches:GroupMatch[];matrix:MatrixRow[];migrations:Migration[];added_codes:string[];left_codes:string[];notes:string[]}
 export interface Campaign {id:number;name:string;segment_id:number;segment_name:string;size:number;note:string;status:string;created_at:string}
 export interface Audit {id:number;actor:string;action:string;status_code:number;created_at:string}
